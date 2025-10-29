@@ -1,0 +1,52 @@
+services:
+  # Servicio de base de datos
+  db:
+    image: postgres:15-alpine
+    container_name: parcial_db
+    environment:
+      POSTGRES_USER: ${DB_USER:-admin}
+      POSTGRES_PASSWORD: ${DB_PASSWORD:-12345}
+      POSTGRES_DB: ${DB_NAME:-parcial_db}
+    volumes:
+      - db_data:/var/lib/postgresql/data
+    ports:
+      - "5432:5432"
+    networks:
+      - app_net
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U ${DB_USER:-admin} -d ${DB_NAME:-parcial_db}"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+      start_period: 10s
+
+  # Servicio de API
+  api:
+    build: 
+      context: .
+      dockerfile: Dockerfile
+    container_name: parcial_api
+    environment:
+      DB_HOST: db
+      DB_PORT: 5432
+      DB_USER: ${DB_USER:-admin}
+      DB_PASSWORD: ${DB_PASSWORD:-12345}
+      DB_NAME: ${DB_NAME:-parcial_db}
+      NODE_ENV: production
+    ports:
+      - "3000:3000"
+    depends_on:
+      db:
+        condition: service_healthy
+    networks:
+      - app_net
+
+# Volúmenes
+volumes:
+  db_data:
+    external: true
+
+# Redes
+networks:
+  app_net:
+    driver: bridge

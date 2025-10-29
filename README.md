@@ -167,7 +167,7 @@ Este proyecto consiste en la implementación de una aplicación contenerizada ut
 
 - 🌐 Probar endpoint de la API
 
-    curl http://localhost:3000/estudiantes
+        curl http://localhost:3000/estudiantes
 
 - 🔐 Verificar usuario no-root
     
@@ -180,7 +180,7 @@ Este proyecto consiste en la implementación de una aplicación contenerizada ut
       docker compose down
 
 ## 👨🏽‍💻 Desarrollador
-- [Daniel Mancia](https://github.com/DANIEL-MANCIA) - DevMadCode
+- [Daniel Mancia](https://github.com/Daniel-Mancia22) - DevMadCode
 
 ## 📄 Notas
 Este proyecto es desarrollado con fines académicos para mi Segundo Parcial de la materia de Implantación de sistemas.
